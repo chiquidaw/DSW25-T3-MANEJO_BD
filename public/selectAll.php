@@ -1,8 +1,14 @@
 <?php
+
+use Dsw\Blog\Database;
+
 require_once '../vendor/autoload.php';
 
-require_once 'conexion.php';
-
+try {
+    $pdo = Database::getConnection();
+} catch (PDOException $e) {
+    die("Error al conectar la BD: " . $e->getMessage());
+}
 // Consulta SQL o manipulación de la base de datos.
 
 $sql = "SELECT id, name, email, register_date FROM users";

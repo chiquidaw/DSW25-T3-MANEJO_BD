@@ -1,8 +1,6 @@
 <?php
 use Dotenv\Dotenv;
 
-require_once '../vendor/autoload.php';
-
 // Leer las variables de entorno.
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
