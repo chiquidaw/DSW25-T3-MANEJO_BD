@@ -1,21 +1,30 @@
 <?php
 // Modificar un usuario
 
-require_once '../vendor/autoload.php';
+use Dsw\Blog\DAO\UserDao;
 
-require_once 'conexion.php';
+require_once '../bootstrap.php';
 
-if(isset($_POST['id'], $_POST['name'], $_POST['email'])) {
-    $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-
-    $stmt->execute([
-        'id' => $_POST['id'],
-        'name' => $_POST['name'],
-        'email' => $_POST['email']
-    ]);
+if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
+    die("El ID no es válido.");
 }
 
-header('Location: selectall.php');
+$id = $_POST['id'];
+
+if(isset($_POST['name'], $_POST['email'])) {
+    $userDao = new UserDao($pdo);
+
+    // Obtengo el usuario:
+    $user = $userDao->get($id);
+
+    // Modifico los datos:
+    $user->setName($_POST['name']);
+    $user->setEmail($_POST['email']);
+
+    // Guardo el usuario:
+    $userDao->update($user);
+}
+
+header('Location: users.php');
 exit();
 ?>

@@ -1,16 +1,19 @@
 <?php
-require_once '../vendor/autoload.php';
 
-require_once 'conexion.php';
+use Dsw\Blog\DAO\UserDao;
 
-// Consulta SQL o manipulación de la base de datos.
+require_once '../bootstrap.php';
 
-if (isset($_GET['id'])) {
-    // Borrar el ID.
-    $sql =  "DELETE FROM users WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['id' => $_GET['id']]);
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("El ID no es válido.");
 }
-header('Location: selectAll.php');
+
+
+$id = $_GET['id'];
+
+$userDao = new UserDao($pdo);
+$user = $userDao->delete($id);
+
+header('Location: users.php');
 exit();
 ?>
