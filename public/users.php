@@ -1,5 +1,6 @@
 <?php
 
+use Dsw\Blog\DAO\PostDao;
 use Dsw\Blog\DAO\UserDao;
 
 require_once '../bootstrap.php';
@@ -28,21 +29,22 @@ $users = $userDao->getAll();
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Fecha registro</th>
-                <th></th>
+                <th>Número artículos</th>
             </tr>
         </thead>
         <tbody>
             <?php
-
+                $postDao = new PostDao($pdo);
                 foreach ($users as $user) {
+                    $posts = $postDao->getByUser($user->getId());
                     echo "<tr>";
                     printf("<td><a href=\"user.php?id=%s\">%s</a></td>", $user->getId(), $user->getId());
                     printf("<td>%s</td>", $user->getName());
                     printf("<td>%s</td>", $user->getEmail());
                     printf("<td>%s</td>", $user->getRegisterDate()->format('d-m-Y'));
+                    printf("<td><a href=\"postsUser.php?id=%s\">%s</td>", $user->getId(), count($posts));
                     echo "</tr>";
                 }
-
             ?>
         </tbody>
     </table>
