@@ -35,7 +35,7 @@ $posts = $postDao->getAll();
                     $user = $userDao->get($userId);
                     echo "<tr>";
                     printf("<td><a href=\"post.php?id=%s\">%s</a></td>", $post->getId(), $post->getId());
-                    printf("<td>%s</td>", $post->getTitle());
+                    printf("<td><a href=\"post.php?id=%s\">%s</a></td>", $post->getId(), $post->getTitle());
                     printf("<td>%s</td>", $user->getName());
                     echo "</tr>";
                 }
