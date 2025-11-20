@@ -1,6 +1,7 @@
 <?php
 
 use Dsw\Blog\DAO\PostDao;
+use Dsw\Blog\DAO\UserDao;
 
 require_once '../bootstrap.php';
 
@@ -28,7 +29,6 @@ if (!$post) {
 <body>
     <h1>Editar Artículo</h1>
     <form action="updatePost.php?id=<?= $id ?>" method="post">
-        <input type="hidden" name="user_id" value="<?= $post->getUserId() ?>">
         <p>
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" required value="<?= $post->getTitle() ?>">
@@ -36,6 +36,20 @@ if (!$post) {
         <p>
             <label for="body">Contenido:</label>
             <textarea name="body" id="body"><?= $post->getBody() ?></textarea>
+        </p>
+        <p>
+            <label for="user">Usuario: </label>
+            <select name="user_id" id="user">
+                <?php
+                    $userDao = new UserDao($pdo);
+                    $users = $userDao->getAll();
+
+                    foreach ($users as $user) {
+                        $autor = $user->getId() === $post->getUserId() ? 'selected' : ''; // Si tiene la misma id, coloca el selected en el campo que cree, sino no.
+                        printf('<option value="%s" %s>%s</option>', $user->getId(), $autor, $user->getName());
+                    }
+                ?>
+            </select>
         </p>
         <p>
             <button type="submit">Editar</button>

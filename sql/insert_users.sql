@@ -1,4 +1,4 @@
-INSERT INTO users (name, email)
-VALUES ('pepe', 'pepe@pepon.es'),
-('ana', 'ana@ana.es'),
-('marta', 'marta@marta.es');
+INSERT INTO users (name, email, password, level)
+VALUES ('pepe', 'pepe@pepon.es', 'pepe', 'user'),
+('ana', 'ana@ana.es', 'ana', 'admin'),
+('marta', 'marta@marta.es', 'marta', 'user');

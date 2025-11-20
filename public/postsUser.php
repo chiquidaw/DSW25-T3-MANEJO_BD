@@ -21,17 +21,9 @@ if (!$user) {
 $postDao = new PostDao($pdo);
 $posts = $postDao->getByUser($user->getId());
 
+$titulo = "Lista de artículos de:";
+include '../includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Lista de Artículos</h1>
     <h2>Usuario: <?= $user->getName(); ?></h2>
     <table>
         <thead>
@@ -52,5 +44,6 @@ $posts = $postDao->getByUser($user->getId());
             ?>
         </tbody>
     </table>
-</body>
-</html>
+<?php
+include '../includes/footer.php';
+?>
